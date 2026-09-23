@@ -31,25 +31,6 @@ A quantidade de diárias deve ser calculada a partir das datas.
 O valor final depende da quantidade de diárias e do valor da diária.
 Uma reserva cancelada deve deixar de ocupar aquele período.
  */
-/*
-LocalDate dataAgora = LocalDate.now();
-        System.out.println("Data de agora: " + dataAgora);
-
-        LocalDate dataEspecifica = LocalDate.of(2026, 10, 15);
-        System.out.println("Data específica: " + dataEspecifica);
-
-        DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String dataFormatada = dataAgora.format(formatador);
-        System.out.println("Data formatada: " + dataFormatada);
-
-        if (dataVencimento.isBefore(hoje)) {
-            System.out.println("Status: Vencido");
-        } else if (dataVencimento.isAfter(hoje)) {
-            System.out.println("Status: Em aberto (Futuro)");
-        } else if (dataVencimento.isEqual(hoje)) {
-            System.out.println("Status: Vence hoje!");
-        }
- */
 
 public class Cadastro {
         ArrayList<String> nome = new ArrayList<>();
