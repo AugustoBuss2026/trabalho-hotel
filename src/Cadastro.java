@@ -1,4 +1,6 @@
 import javax.swing.*;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 /*
 Um hotel deseja desenvolver um sistema para controlar seus hóspedes, quartos e reservas.
@@ -41,6 +43,9 @@ public class Cadastro {
         ArrayList<Boolean> listaNegra = new ArrayList<>();
         ArrayList<Boolean> cafe = new ArrayList<>();
         ArrayList<Boolean> massagem = new ArrayList<>();
+        ArrayList<String> reservaH = new ArrayList<>();
+        ArrayList<String> motivo = new ArrayList<>();
+        ArrayList<Double> divida = new ArrayList<>();
 
     ArrayList<String> nomeQuarto = new ArrayList<>();
     ArrayList<String> qualidade = new ArrayList<>();
@@ -51,6 +56,13 @@ public class Cadastro {
     ArrayList<Integer> camaInd = new ArrayList<>();
     ArrayList<Integer> camaCas = new ArrayList<>();
     ArrayList<Integer> beliche = new ArrayList<>();
+    ArrayList<LocalDate> data1 = new ArrayList<>();
+    ArrayList<LocalDate> data2 = new ArrayList<>();
+    ArrayList<Double> valorFinal = new ArrayList<>();
+    ArrayList<String> reservaQ = new ArrayList<>();
+    ArrayList<String> clienteAssociado = new ArrayList<>();
+    ArrayList<Period> periodo = new ArrayList<>();
+
 
     Integer selecionar;
     String transferidor;
@@ -65,6 +77,10 @@ public class Cadastro {
             devendo.add(false);
             cafe.add(false);
             massagem.add(false);
+            valorFinal.add(null);
+            reservaH.add(null);
+            motivo.add(null);
+            divida.add(0.0);
         }
         void cadastroQuarto() {
             nomeQuarto.add(JOptionPane.showInputDialog("Coloque o número do quarto"));
@@ -122,7 +138,11 @@ public class Cadastro {
             }
             danificado.add(false);
             ocupado.add(false);
-
+            data1.add(null);
+            data2.add(null);
+            reservaQ.add(null);
+            clienteAssociado.add(null);
+            periodo.add(null);
         }
     }
 
