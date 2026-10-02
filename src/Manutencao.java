@@ -1,7 +1,10 @@
 import javax.swing.*;
 
 public class Manutencao {
-    Cadastro ca = new Cadastro();
+    Cadastro ca;
+    Manutencao(Cadastro ca){
+        this.ca = ca;
+    }
     String conDesQuartoProcura, passinf, devedr, valo;
     Integer numer, q, g;
 
@@ -19,14 +22,16 @@ public class Manutencao {
             for (q = 0; q < ca.nomeQuarto.size(); q++) {
                 if (conDesQuartoProcura.equals(ca.nomeQuarto.get(q)) && ca.danificado.get(q) == false) {
                     JOptionPane.showMessageDialog(null, "Quarto marcado como danificado");
+                    devedr = JOptionPane.showInputDialog("Qual cliente foi responsável pelo estrago\n(Se não foi por conta de um cliente não preencha e apenas prosiga)");
+                    if (devedr.isEmpty()){
+                        ca.danificado.set(q, true);
+                        return;
+                    }
                     for (g = 0; g<ca.nome.size(); g++){
-                        devedr = JOptionPane.showInputDialog("Qual cliente foi responsável pelo estrago\n(Se não foi por conta de um cliente não preencha e apenas prosiga)");
-                        if (devedr.equals(ca.nome.get(q))){
+                        if (devedr.equals(ca.nome.get(g))){
                             valo = JOptionPane.showInputDialog("Qual o valor do estrago?");
                             ca.divida.set(g, Double.parseDouble(valo));
                             ca.devendo.set(g, true);
-                            ca.danificado.set(q, true);
-                        }else if (devedr.isEmpty()){
                             ca.danificado.set(q, true);
                         }
                     }

@@ -25,6 +25,7 @@ public class Reserva {
     ArrayList<LocalDate> data2Reserva = new ArrayList<>();
 
     void reservarQuarto() {
+        valorTotal = 0;
         nomeProcura = JOptionPane.showInputDialog("Nome do hospede a reservar o quarto");
         for (i = 0; i < ca.nome.size(); i++) {
             if (nomeProcura.equalsIgnoreCase(ca.nome.get(i))) {
@@ -87,65 +88,72 @@ public class Reserva {
                         mes = JOptionPane.showInputDialog("Coloque o mês da reserva");
                         ano = JOptionPane.showInputDialog("Coloque o ano da reserva");
                         DateTimeFormatter formatadorData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                        ca.data1.set(i, LocalDate.parse(dia + "/" + mes + "/" + ano, formatadorData));
                         LocalDate d1 = LocalDate.parse(dia + "/" + mes + "/" + ano, formatadorData);
                         dia2 = JOptionPane.showInputDialog("Coloque o dia de fim da reserva");
                         mes2 = JOptionPane.showInputDialog("Coloque o mês de fim da reserva");
                         ano2 = JOptionPane.showInputDialog("Coloque o ano de fim da reserva");
-                        ca.data2.set(i, LocalDate.parse(dia2 + "/" + mes2 + "/" + ano2, formatadorData));
                         LocalDate d2 = LocalDate.parse(dia2 + "/" + mes2 + "/" + ano2, formatadorData);
-                        periodo = Period.between(ca.data1.get(f), ca.data2.get(f));
-                        totalDias = ChronoUnit.DAYS.between(ca.data1.get(f), ca.data2.get(f));
-                        valorTotalReserva = ca.valorD.get(f) * totalDias;
-                        valorTotal += valorTotalReserva;
-                            if (d1.isAfter(ca.data1.get(f)) && d2.isBefore(ca.data2.get(f))) {
+                        if (!d2.isAfter(d1)) {
+                            JOptionPane.showMessageDialog(null, "A data final deve ser depois da data inicial");
+                            return;
+                        }
+                        if (ca.data1.get(f) != null && ca.data2.get(f) != null) {
+                            if (d1.isBefore(ca.data2.get(f)) && d2.isAfter(ca.data1.get(f))) {
                                 JOptionPane.showMessageDialog(null, "Quarto ocupado");
                                 return;
+                            }
                         }
-                    }
-
-                    if (ca.cafe.get(i) == true) {
-                        valorTotal += 50 * qtreservador;
-                    }
-                    if (ca.massagem.get(i) == true) {
-                        valorTotal += 250;
-                    }
-                    ca.valorFinal.set(i, valorTotal);
-                    ca.quartoAssociado.set(i, ca.nomeQuarto.get(f));
-                    ca.clienteAssociado.set(f, ca.nome.get(i));
-                    ca.ocupado.set(f, true);
-                    data1Reserva.add(ca.data1.get(i));
-                    data2Reserva.add(ca.data2.get(i));
-                    JOptionPane.showMessageDialog(null, "RESERVOU O QUARTO " + ca.nomeQuarto.get(f)+"\n\nQuarto reservado por:\n" + periodo.getDays() + " Dias\n" + periodo.getMonths() + " Meses\n" + periodo.getYears() + " Anos\n" + "Qualidade do quarto: " +ca.qualidade.get(f) + "\nCapacidade do quarto: " + ca.qthospede.get(f)+ "\nValor total: " + valorTotal);
-                    ca.reservaH.set(i, "Quarto reservado por:\n" + periodo.getDays() + " Dias\n" + periodo.getMonths() + " Meses\n" + periodo.getYears() + " Anos\n" + "Qualidade do quarto: " +ca.qualidade.get(f) + "\nCapacidade do quarto: " + ca.qthospede.get(f)+ "\nValor total: " + valorTotal);
-                    ca.reservaQ.set(i, "Cliente reservou por:\n" + periodo.getDays() + " Dias\n" + periodo.getMonths() + " Meses\n" + periodo.getYears() + " Anos\n" + "Qualidade do quarto: " +ca.qualidade.get(f) + "\nCapacidade do quarto: " + ca.qthospede.get(f)+ "\nValor total: " + valorTotal);
-                    passarinf = JOptionPane.showInputDialog("Qual a forma de Pagamento\n[1]PIX\n[2]Débito\n[3]Crédito\n[4]Dinheiro\n[0]Desistir do pagamento");
-                    numeros = Integer.parseInt(passarinf);
-                    if (numeros == 1) {
-                        ca.formaDePagamento.set(i, "PIX");
-                        JOptionPane.showMessageDialog(null, "Hospedagem paga com PIX");
-                    } else if (numeros == 2) {
-                        ca.formaDePagamento.set(i, "Débito");
-                        JOptionPane.showMessageDialog(null, "Hospedagem paga com débito");
-                    } else if (numeros == 3) {
-                        ca.formaDePagamento.set(i, "Crédito");
-                        JOptionPane.showMessageDialog(null, "Hospedagem paga com crédito");
-                    } else if (numeros == 4) {
-                        ca.formaDePagamento.set(i, "Dinheiro");
-                        JOptionPane.showMessageDialog(null, "Hospedagem paga em dinheiro");
-                } else if (numeros == 0) {
-                        JOptionPane.showMessageDialog(null, "Hospedagem cancelada");
-                        ca.cafe.set(i, false);
-                        ca.massagem.set(i, false);
-                        ca.data1.set(i, null);
-                        ca.data2.set(i, null);
-                        ca.valorFinal.set(i, null);
-                        ca.devendo.set(i, false);
-                        ca.quartoAssociado.set(i, null);
+                        ca.data1.set(f, d1);
+                        ca.data2.set(f, d2);
+                        periodo = Period.between(d1, d2);
+                        totalDias = ChronoUnit.DAYS.between(d1, d2);
+                        valorTotalReserva = ca.valorD.get(f) * totalDias;
+                        valorTotal += valorTotalReserva;
+                        if (ca.cafe.get(i) == true) {
+                            valorTotal += 50 * qtreservador;
+                        }
+                        if (ca.massagem.get(i) == true) {
+                            valorTotal += 250;
+                        }
+                        ca.valorFinal.set(i, valorTotal);
+                        ca.quartoAssociado.set(i, ca.nomeQuarto.get(f));
+                        ca.clienteAssociado.set(f, ca.nome.get(i));
+                        ca.ocupado.set(f, true);
+                        data1Reserva.add(ca.data1.get(f));
+                        data2Reserva.add(ca.data2.get(f));
+                        JOptionPane.showMessageDialog(null, "RESERVOU O QUARTO " + ca.nomeQuarto.get(f) + "\n\nQuarto reservado por:\n" + totalDias + " Dias\n" + periodo.getMonths() + " Meses\n" + periodo.getYears() + " Anos\n" + "Qualidade do quarto: " + ca.qualidade.get(f) + "\nCapacidade do quarto: " + ca.qthospede.get(f) + "\nValor total: " + valorTotal);
+                        ca.reservaH.set(i, "Quarto reservado por:\n" + totalDias + " Dias\n" + periodo.getMonths() + " Meses\n" + periodo.getYears() + " Anos\n" + "Qualidade do quarto: " + ca.qualidade.get(f) + "\nCapacidade do quarto: " + ca.qthospede.get(f) + "\nValor total: " + valorTotal);
+                        ca.reservaQ.set(f, "Cliente reservou por:\n" + totalDias + " Dias\n" + periodo.getMonths() + " Meses\n" + periodo.getYears() + " Anos\n" + "Qualidade do quarto: " + ca.qualidade.get(f) + "\nCapacidade do quarto: " + ca.qthospede.get(f) + "\nValor total: " + valorTotal);
+                        passarinf = JOptionPane.showInputDialog("Qual a forma de Pagamento\n[1]PIX\n[2]Débito\n[3]Crédito\n[4]Dinheiro\n[0]Desistir do pagamento");
+                        numeros = Integer.parseInt(passarinf);
+                        if (numeros == 1) {
+                            ca.formaDePagamento.set(i, "PIX");
+                            JOptionPane.showMessageDialog(null, "Hospedagem paga com PIX");
+                        } else if (numeros == 2) {
+                            ca.formaDePagamento.set(i, "Débito");
+                            JOptionPane.showMessageDialog(null, "Hospedagem paga com débito");
+                        } else if (numeros == 3) {
+                            ca.formaDePagamento.set(i, "Crédito");
+                            JOptionPane.showMessageDialog(null, "Hospedagem paga com crédito");
+                        } else if (numeros == 4) {
+                            ca.formaDePagamento.set(i, "Dinheiro");
+                            JOptionPane.showMessageDialog(null, "Hospedagem paga em dinheiro");
+                        } else if (numeros == 0) {
+                            JOptionPane.showMessageDialog(null, "Hospedagem cancelada");
+                            ca.cafe.set(i, false);
+                            ca.massagem.set(i, false);
+                            ca.data1.set(i, null);
+                            ca.data2.set(i, null);
+                            ca.valorFinal.set(i, null);
+                            ca.devendo.set(i, false);
+                            ca.quartoAssociado.set(i, null);
+                            ca.ocupado.set(f, false);
+                            ca.clienteAssociado.set(f, null);
+                            ca.reservaQ.set(f, null);
+                        }
                     }
                 }
             }
         }
     }
 }
-

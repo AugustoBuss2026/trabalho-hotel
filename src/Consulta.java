@@ -18,30 +18,26 @@ public class Consulta {
                 JOptionPane.showMessageDialog(null, "Cliente dividado");
             }
             JOptionPane.showMessageDialog(null, "Quartos de reserva do cliente:");
-            for (int f = 0; f < ca.quartoAssociado.size(); f++) {
-                if (ca.quartoAssociado.get(f) != null) {
-                    JOptionPane.showMessageDialog(null, ca.quartoAssociado.get(f));
-                    JOptionPane.showMessageDialog(null, ca.reservaH.get(f));
-
-                }
+            if (ca.quartoAssociado.get(i) != null) {
+                JOptionPane.showMessageDialog(null, ca.quartoAssociado.get(i));
+                JOptionPane.showMessageDialog(null, ca.reservaH.get(i));
             }
         }
     }
-        void ConsultaQuarto () {
-            for (i = 0; i < ca.nomeQuarto.size(); i++) {
-                JOptionPane.showMessageDialog(null, ca.nomeQuarto.get(i));
-                if (ca.ocupado.get(i) == true) {
-                    JOptionPane.showMessageDialog(null, "Quarto ocupado");
-                }
-                if (ca.danificado.get(i) == true) {
-                    JOptionPane.showMessageDialog(null, "Quarto danificado");
-                }
-                for (int f = 0; f < ca.clienteAssociado.size(); f++) {
-                    if (ca.clienteAssociado.get(f) != null) {
-                        JOptionPane.showMessageDialog(null, ca.clienteAssociado.get(f));
-                        JOptionPane.showMessageDialog(null, ca.reservaQ.get(f));
-                    }
-                }
+
+    void ConsultaQuarto() {
+        for (i = 0; i < ca.nomeQuarto.size(); i++) {
+            JOptionPane.showMessageDialog(null, ca.nomeQuarto.get(i));
+            if (ca.ocupado.get(i) == true) {
+                JOptionPane.showMessageDialog(null, "Quarto ocupado");
+            }
+            if (ca.danificado.get(i) == true) {
+                JOptionPane.showMessageDialog(null, "Quarto danificado");
+            }
+            if (ca.clienteAssociado.get(i) != null) {
+                JOptionPane.showMessageDialog(null, ca.clienteAssociado.get(i));
+                JOptionPane.showMessageDialog(null, ca.reservaQ.get(i));
             }
         }
+    }
 }

@@ -4,9 +4,9 @@ void main() {
     Cadastro ca = new Cadastro();
     Reserva re = new Reserva(ca);
     Consulta con = new Consulta(ca);
-    Manutencao ma = new Manutencao();
-    CancelarReservas cr = new CancelarReservas();
-    ListaNegraEDividas ln = new ListaNegraEDividas();
+    Manutencao ma = new Manutencao(ca);
+    CancelarReservas cr = new CancelarReservas(ca);
+    ListaNegraEDividas ln = new ListaNegraEDividas(ca);
     String passainf;
     int escolha, escolha2, escolha3, escolha4, escolha5;
 
