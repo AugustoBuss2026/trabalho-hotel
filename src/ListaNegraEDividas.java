@@ -15,8 +15,10 @@ public class ListaNegraEDividas {
                 ca.motivo.set(m, JOptionPane.showInputDialog("Qual é o motivo"));
                 JOptionPane.showMessageDialog(null, ca.nome.get(m) + " foi adicionado a lista negra por " +ca.motivo.get(m));
                 ca.listaNegra.set(m, true);
+                return;
             }
         }
+        JOptionPane.showMessageDialog(null, "Cliente não encontrado");
     }
     void Divida(){
         procuraronme = JOptionPane.showInputDialog("Qual é o cliente dividado");
@@ -25,7 +27,11 @@ public class ListaNegraEDividas {
                 JOptionPane.showMessageDialog(null, ca.nome.get(m)+ " dividado em "+ca.divida.get(m));
                 do {
                     pps = JOptionPane.showInputDialog("[1]Prosseguir\n[2]Desistir do pagamento");
-                    decidir = Integer.parseInt(pps);
+                    try {
+                        decidir = Integer.parseInt(pps);
+                    }catch (NumberFormatException e){
+                        JOptionPane.showMessageDialog(null, "Digite um valor válido");
+                    }
                     switch (decidir){
                         case 1:
                             JOptionPane.showMessageDialog(null, "Divída paga");
@@ -34,7 +40,9 @@ public class ListaNegraEDividas {
                             break;
                     }
                 }while (decidir!=2);
+                return;
             }
         }
+        JOptionPane.showMessageDialog(null, "Cliente não encontrado");
     }
 }

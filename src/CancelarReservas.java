@@ -38,12 +38,11 @@ public class CancelarReservas {
                         ca.ocupado.set(k, false);
                         ca.clienteAssociado.set(k, null);
                         ca.reservaQ.set(k, null);
+                        return;
                     }
                 }
-            }else {
-                JOptionPane.showMessageDialog(null, "Cliente não encontrado");
-                return;
             }
         }
+        JOptionPane.showMessageDialog(null, "Cliente ou quarto não encontrados");
     }
 }

@@ -70,7 +70,11 @@ public class Cadastro {
         void cadastroCliente() {
             nome.add(JOptionPane.showInputDialog("Coloque seu nome"));
             transferidor = JOptionPane.showInputDialog("Coloque sua idade");
-            idade.add(Integer.parseInt(transferidor));
+            try {
+                idade.add(Integer.parseInt(transferidor));
+            }catch (NumberFormatException e){
+                JOptionPane.showMessageDialog(null, "Digite um valor válido");
+            }
             formaDePagamento.add(null);
             quartoAssociado.add(null);
             listaNegra.add(false);
@@ -85,7 +89,11 @@ public class Cadastro {
         void cadastroQuarto() {
             nomeQuarto.add(JOptionPane.showInputDialog("Coloque o número do quarto"));
             transferidor = JOptionPane.showInputDialog("Qual a qualidade de quarto?\n[1]Standard\n[2]Deluxe\n[3]Suíte Júnior\n[4]Suíte Master\n[5]Suíte Presidencial");
-            selecionar = Integer.parseInt(transferidor);
+            try {
+                selecionar = Integer.parseInt(transferidor);
+            }catch (NumberFormatException e){
+                JOptionPane.showMessageDialog(null, "Digite um valor válido");
+            }
             if(selecionar == 1){
                 qualidade.add("Standart");
                 valorD.add(300.0);
@@ -106,7 +114,11 @@ public class Cadastro {
                 return;
             }
             transferidor = JOptionPane.showInputDialog("Quantos hospedes cabem no quarto?\n[1]SGL\n[2]DBL\n[3]TWN\n[4]TRPL\n[5]QUAD");
-            selecionar = Integer.parseInt(transferidor);
+            try {
+                selecionar = Integer.parseInt(transferidor);
+            }catch (NumberFormatException e){
+                JOptionPane.showMessageDialog(null, "Digite um valor válido");
+            }
             if(selecionar == 1){
                 qthospede.add(1);
                 camaInd.add(1);
@@ -133,7 +145,7 @@ public class Cadastro {
                 camaCas.add(1);
                 beliche.add(1);
             }else {
-                System.err.println("Valor inválido");
+                System.err.println("Digite um valor válido");
                 return;
             }
             danificado.add(false);

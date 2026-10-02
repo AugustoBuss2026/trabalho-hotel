@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 public class Reserva {
     Period periodo;
     long totalDias;
-    LocalDate dataAgora;
+    LocalDate dataAgora, d1, d2;
     Period period;
     DateTimeFormatter dateTimeFormatter;
     Cadastro ca;
@@ -31,7 +32,11 @@ public class Reserva {
             if (nomeProcura.equalsIgnoreCase(ca.nome.get(i))) {
                 if (ca.idade.get(i) < 18) {
                     passarinf = JOptionPane.showInputDialog("Cliente menor de idade, confirma se cliente está acompanhado de algum adulto [1]Sim [2]Não");
-                    numeros = Integer.parseInt(passarinf);
+                    try {
+                        numeros = Integer.parseInt(passarinf);
+                    }catch (NumberFormatException e){
+                        JOptionPane.showMessageDialog(null, "Digite um valor válido");
+                    }
                     if (numeros == 1) {
                         JOptionPane.showMessageDialog(null, "Pode prosseguir");
                     } else if (numeros == 2) {
@@ -52,7 +57,11 @@ public class Reserva {
                 }
 
                 passarinf = JOptionPane.showInputDialog("Quer adicionar alguém serviço de nosso hotel?\n[1]Café no quarto\n[2]Massagem\n[3]Café no quarto/Massagem\n[0]Não");
-                numeros = Integer.parseInt(passarinf);
+                try {
+                    numeros = Integer.parseInt(passarinf);
+                }catch (NumberFormatException e){
+                    JOptionPane.showMessageDialog(null, "Digite um valor válido");
+                }
                 if (numeros == 1) {
                     ca.cafe.set(i, true);
                     JOptionPane.showMessageDialog(null, "Serviço de café no quarto adicionado");
@@ -75,7 +84,11 @@ public class Reserva {
                     if (quartoProcura.equalsIgnoreCase(ca.nomeQuarto.get(f))) {
                         dataAgora = LocalDate.now();
                         passarinf = JOptionPane.showInputDialog("Quantos hospedes vão utilizar este quarto");
-                        qtreservador = Integer.parseInt(passarinf);
+                        try {
+                            qtreservador = Integer.parseInt(passarinf);
+                        }catch (NumberFormatException e){
+                            JOptionPane.showMessageDialog(null, "Digite um valor válido");
+                        }
                         if (ca.qthospede.get(f) < qtreservador) {
                             JOptionPane.showMessageDialog(null, "Quantidade de hospedes superior à capacidade do quarto");
                             return;
@@ -84,15 +97,19 @@ public class Reserva {
                             JOptionPane.showMessageDialog(null, "Quarto está danificado, logo não disponível");
                             return;
                         }
-                        dia = JOptionPane.showInputDialog("Coloque o dia da reserva");
-                        mes = JOptionPane.showInputDialog("Coloque o mês da reserva");
-                        ano = JOptionPane.showInputDialog("Coloque o ano da reserva");
-                        DateTimeFormatter formatadorData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                        LocalDate d1 = LocalDate.parse(dia + "/" + mes + "/" + ano, formatadorData);
-                        dia2 = JOptionPane.showInputDialog("Coloque o dia de fim da reserva");
-                        mes2 = JOptionPane.showInputDialog("Coloque o mês de fim da reserva");
-                        ano2 = JOptionPane.showInputDialog("Coloque o ano de fim da reserva");
-                        LocalDate d2 = LocalDate.parse(dia2 + "/" + mes2 + "/" + ano2, formatadorData);
+                        try {
+                            dia = JOptionPane.showInputDialog("Coloque o dia da reserva");
+                            mes = JOptionPane.showInputDialog("Coloque o mês da reserva");
+                            ano = JOptionPane.showInputDialog("Coloque o ano da reserva");
+                            DateTimeFormatter formatadorData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                            d1 = LocalDate.parse(dia + "/" + mes + "/" + ano, formatadorData);
+                            dia2 = JOptionPane.showInputDialog("Coloque o dia de fim da reserva");
+                            mes2 = JOptionPane.showInputDialog("Coloque o mês de fim da reserva");
+                            ano2 = JOptionPane.showInputDialog("Coloque o ano de fim da reserva");
+                            d2 = LocalDate.parse(dia2 + "/" + mes2 + "/" + ano2, formatadorData);
+                        }catch (DateTimeException e){
+                            JOptionPane.showMessageDialog(null, "Digite um valor válido");
+                        }
                         if (!d2.isAfter(d1)) {
                             JOptionPane.showMessageDialog(null, "A data final deve ser depois da data inicial");
                             return;
@@ -125,7 +142,11 @@ public class Reserva {
                         ca.reservaH.set(i, "Quarto reservado por:\n" + totalDias + " Dias\n" + periodo.getMonths() + " Meses\n" + periodo.getYears() + " Anos\n" + "Qualidade do quarto: " + ca.qualidade.get(f) + "\nCapacidade do quarto: " + ca.qthospede.get(f) + "\nValor total: " + valorTotal);
                         ca.reservaQ.set(f, "Cliente reservou por:\n" + totalDias + " Dias\n" + periodo.getMonths() + " Meses\n" + periodo.getYears() + " Anos\n" + "Qualidade do quarto: " + ca.qualidade.get(f) + "\nCapacidade do quarto: " + ca.qthospede.get(f) + "\nValor total: " + valorTotal);
                         passarinf = JOptionPane.showInputDialog("Qual a forma de Pagamento\n[1]PIX\n[2]Débito\n[3]Crédito\n[4]Dinheiro\n[0]Desistir do pagamento");
-                        numeros = Integer.parseInt(passarinf);
+                        try {
+                            numeros = Integer.parseInt(passarinf);
+                        }catch (NumberFormatException e){
+                            JOptionPane.showMessageDialog(null, "Digite um valor válido");
+                        }
                         if (numeros == 1) {
                             ca.formaDePagamento.set(i, "PIX");
                             JOptionPane.showMessageDialog(null, "Hospedagem paga com PIX");
@@ -150,10 +171,12 @@ public class Reserva {
                             ca.ocupado.set(f, false);
                             ca.clienteAssociado.set(f, null);
                             ca.reservaQ.set(f, null);
+                            return;
                         }
                     }
                 }
             }
         }
+        JOptionPane.showMessageDialog(null, "Cliente ou quarto não encontrados");
     }
 }

@@ -14,8 +14,10 @@ public class Manutencao {
                 if (conDesQuartoProcura.equals(ca.nomeQuarto.get(q)) && ca.danificado.get(q) == true) {
                     JOptionPane.showMessageDialog(null, "Quarto reparado");
                     ca.danificado.set(q, false);
+                    return;
                 }
             }
+            JOptionPane.showMessageDialog(null, "Quarto não encontrado");
         }
         void estrago (){
             conDesQuartoProcura = JOptionPane.showInputDialog("Qual o quarto que foi danificado");
@@ -30,12 +32,18 @@ public class Manutencao {
                     for (g = 0; g<ca.nome.size(); g++){
                         if (devedr.equals(ca.nome.get(g))){
                             valo = JOptionPane.showInputDialog("Qual o valor do estrago?");
-                            ca.divida.set(g, Double.parseDouble(valo));
+                            try {
+                                ca.divida.set(g, Double.parseDouble(valo));
+                            }catch (NumberFormatException e){
+                                JOptionPane.showMessageDialog(null, "Digite um valor válido");
+                            }
                             ca.devendo.set(g, true);
                             ca.danificado.set(q, true);
+                            return;
                         }
                     }
                 }
             }
+            JOptionPane.showMessageDialog(null, "Quarto o cliente não encontrados");
         }
     }
