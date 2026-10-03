@@ -34,7 +34,6 @@ public class CancelarReservas {
                         ca.data1.set(k, null);
                         ca.data2.set(k, null);
                         ca.valorFinal.set(p, null);
-                        ca.devendo.set(p, false);
                         ca.ocupado.set(k, false);
                         ca.clienteAssociado.set(k, null);
                         ca.reservaQ.set(k, null);

@@ -25,12 +25,14 @@ public class ListaNegraEDividas {
         for (m = 0; m<ca.nome.size(); m++) {
             if (procuraronme.equals(ca.nome.get(m)) && ca.devendo.get(m) == true) {
                 JOptionPane.showMessageDialog(null, ca.nome.get(m)+ " dividado em "+ca.divida.get(m));
+                pps = JOptionPane.showInputDialog("[1]Prosseguir\n[2]Desistir do pagamento");
                 do {
-                    pps = JOptionPane.showInputDialog("[1]Prosseguir\n[2]Desistir do pagamento");
                     try {
                         decidir = Integer.parseInt(pps);
+                        break;
                     }catch (NumberFormatException e){
                         JOptionPane.showMessageDialog(null, "Digite um valor válido");
+                        pps = JOptionPane.showInputDialog("[1]Prosseguir\n[2]Desistir do pagamento");
                     }
                     switch (decidir){
                         case 1:

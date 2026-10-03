@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.Period;
 import java.util.ArrayList;
 /*
@@ -46,6 +47,8 @@ public class Cadastro {
         ArrayList<String> reservaH = new ArrayList<>();
         ArrayList<String> motivo = new ArrayList<>();
         ArrayList<Double> divida = new ArrayList<>();
+    ArrayList<LocalTime> horario1 = new ArrayList<>();
+    ArrayList<LocalTime> horario2 = new ArrayList<>();
 
     ArrayList<String> nomeQuarto = new ArrayList<>();
     ArrayList<String> qualidade = new ArrayList<>();
@@ -70,11 +73,15 @@ public class Cadastro {
         void cadastroCliente() {
             nome.add(JOptionPane.showInputDialog("Coloque seu nome"));
             transferidor = JOptionPane.showInputDialog("Coloque sua idade");
-            try {
-                idade.add(Integer.parseInt(transferidor));
-            }catch (NumberFormatException e){
-                JOptionPane.showMessageDialog(null, "Digite um valor válido");
-            }
+            do {
+                try {
+                    idade.add(Integer.parseInt(transferidor));
+                    break;
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Digite um valor válido");
+                    transferidor = JOptionPane.showInputDialog("Coloque sua idade");
+                }
+            }while (true);
             formaDePagamento.add(null);
             quartoAssociado.add(null);
             listaNegra.add(false);
@@ -85,15 +92,21 @@ public class Cadastro {
             reservaH.add(null);
             motivo.add(null);
             divida.add(0.0);
+            horario1.add(null);
+            horario2.add(null);
         }
         void cadastroQuarto() {
             nomeQuarto.add(JOptionPane.showInputDialog("Coloque o número do quarto"));
             transferidor = JOptionPane.showInputDialog("Qual a qualidade de quarto?\n[1]Standard\n[2]Deluxe\n[3]Suíte Júnior\n[4]Suíte Master\n[5]Suíte Presidencial");
-            try {
-                selecionar = Integer.parseInt(transferidor);
-            }catch (NumberFormatException e){
-                JOptionPane.showMessageDialog(null, "Digite um valor válido");
-            }
+            do {
+                try {
+                    selecionar = Integer.parseInt(transferidor);
+                    break;
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Digite um valor válido");
+                    transferidor = JOptionPane.showInputDialog("Qual a qualidade de quarto?\n[1]Standard\n[2]Deluxe\n[3]Suíte Júnior\n[4]Suíte Master\n[5]Suíte Presidencial");
+                }
+            }while (true);
             if(selecionar == 1){
                 qualidade.add("Standart");
                 valorD.add(300.0);
@@ -114,11 +127,15 @@ public class Cadastro {
                 return;
             }
             transferidor = JOptionPane.showInputDialog("Quantos hospedes cabem no quarto?\n[1]SGL\n[2]DBL\n[3]TWN\n[4]TRPL\n[5]QUAD");
-            try {
-                selecionar = Integer.parseInt(transferidor);
-            }catch (NumberFormatException e){
-                JOptionPane.showMessageDialog(null, "Digite um valor válido");
-            }
+            do {
+                try {
+                    selecionar = Integer.parseInt(transferidor);
+                    break;
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Digite um valor válido");
+                    transferidor = JOptionPane.showInputDialog("Quantos hospedes cabem no quarto?\n[1]SGL\n[2]DBL\n[3]TWN\n[4]TRPL\n[5]QUAD");
+                }
+            }while (true);
             if(selecionar == 1){
                 qthospede.add(1);
                 camaInd.add(1);
