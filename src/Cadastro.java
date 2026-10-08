@@ -11,8 +11,8 @@ public class Cadastro {
     ArrayList<Boolean> devendo = new ArrayList<>();
     ArrayList<ArrayList<String>> quartoAssociado = new ArrayList<>();
     ArrayList<Boolean> listaNegra = new ArrayList<>();
-    ArrayList<Boolean> cafe = new ArrayList<>();
-    ArrayList<Boolean> massagem = new ArrayList<>();
+    ArrayList<ArrayList<Boolean>> cafe = new ArrayList<>();
+    ArrayList<ArrayList<Boolean>> massagem = new ArrayList<>();
     ArrayList<ArrayList<String>> reservaH = new ArrayList<>();
     ArrayList<String> motivo = new ArrayList<>();
     ArrayList<Double> divida = new ArrayList<>();
@@ -36,15 +36,17 @@ public class Cadastro {
     Boolean cpfexistente, quartoexistente;
 
     void cadastroCliente() {
-        cpfexistente = false;
         do{
-            passarquarto = JOptionPane.showInputDialog("Coloque o nome do hospede");
-        }while (passarquarto == null);
-        nome.add(passarnome);
+            passarnome = JOptionPane.showInputDialog("Coloque o nome do hospede");
+            if (passarnome == null){
+                return;
+            }
+        }while (passarnome.isEmpty());
         do {
+            cpfexistente = false;
             cpfinserir = JOptionPane.showInputDialog("Coloque o CPF do hospede");
             if (cpfinserir == null) {
-                break;
+                return;
             }
             if (cpfinserir.length() != 11) {
                 JOptionPane.showMessageDialog(null, "O CPF deve ter 11 caracteres");
@@ -61,21 +63,25 @@ public class Cadastro {
                     break;
                 }
             }
-        } while (cpfexistente || cpfinserir.length() != 11 || !cpfinserir.matches("\\d+"));
-        cpf.add(cpfinserir);
+        } while (cpfinserir.isEmpty() || cpfexistente || cpfinserir.length() != 11 || !cpfinserir.matches("\\d+"));
         do {
             transferidor = JOptionPane.showInputDialog("Coloque a idade do hospede");
             if (Integer.parseInt(transferidor) < 18){
                 JOptionPane.showMessageDialog(null, "Não cadastramos menores de idade");
             }
-        } while (transferidor == null || Integer.parseInt(transferidor) < 18);
+            if (transferidor == null){
+                return;
+            }
+        } while (transferidor.isEmpty() || Integer.parseInt(transferidor) < 18);
+        cpf.add(cpfinserir);
+        nome.add(passarnome);
         idade.add(Integer.parseInt(transferidor));
         formaDePagamento.add(null);
         quartoAssociado.add(new ArrayList<>());
         listaNegra.add(false);
         devendo.add(false);
-        cafe.add(false);
-        massagem.add(false);
+        cafe.add(new ArrayList<>());
+        massagem.add(new ArrayList<>());
         valorFinal.add(new ArrayList<>());
         reservaH.add(new ArrayList<>());
         motivo.add(null);
@@ -88,7 +94,7 @@ public class Cadastro {
             quartoexistente = false;
             passarquarto = JOptionPane.showInputDialog("Coloque o número do quarto");
             if (passarquarto == null) {
-                break;
+                return;
             }
             if (passarquarto.length() != 3) {
                 JOptionPane.showMessageDialog(null, "Número de quarto deve conter 3 dígitos");
@@ -105,11 +111,13 @@ public class Cadastro {
                     break;
                 }
             }
-        } while (quartoexistente || passarquarto.length() != 3 || !passarquarto.matches("\\d+"));
-        nomeQuarto.add(passarquarto);
+        } while (passarquarto.isEmpty() || quartoexistente || passarquarto.length() != 3 || !passarquarto.matches("\\d+"));
         do {
             transferidor = JOptionPane.showInputDialog("Qual a qualidade de quarto?\n[1]Standard\n[2]Deluxe\n[3]Suíte Júnior\n[4]Suíte Master\n[5]Suíte Presidencial");
-        } while (transferidor == null || Integer.parseInt(transferidor) != 1 && Integer.parseInt(transferidor) != 2 && Integer.parseInt(transferidor) != 3 && Integer.parseInt(transferidor) != 4 && Integer.parseInt(transferidor) != 5);
+            if (transferidor == null){
+                return;
+            }
+        } while (transferidor.isEmpty() || Integer.parseInt(transferidor) != 1 && Integer.parseInt(transferidor) != 2 && Integer.parseInt(transferidor) != 3 && Integer.parseInt(transferidor) != 4 && Integer.parseInt(transferidor) != 5);
         selecionar = Integer.parseInt(transferidor);
         if (selecionar == 1) {
             qualidade.add("Standart");
@@ -126,13 +134,11 @@ public class Cadastro {
         } else if (selecionar == 5) {
             qualidade.add("Suíte Presidencial");
             valorD.add(3500.0);
-        } else {
-            System.err.println("Valor inválido");
-            return;
         }
         do {
             transferidor = JOptionPane.showInputDialog("Quantos hospedes cabem no quarto?");
         } while (transferidor == null);
+        nomeQuarto.add(passarquarto);
         qthospede.add(Integer.parseInt(transferidor));
         danificado.add(false);
         ocupado.add(false);

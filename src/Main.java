@@ -13,35 +13,29 @@ void main() {
 
 
     do {
-        passainf = JOptionPane.showInputDialog("Qual procedimento quer fazer?\n[1]Cadastro\n[2]Reserva\n[3]Consulta\n[4]Cancelar reserva\n[5]Reparo e danificado\n[6]Lista negra e dividas\n[99]SAIR");
-        if (passainf == null || passainf.isEmpty()) {
-            break;
-        }
         do {
-            try {
-                escolha = Integer.parseInt(passainf);
-                break;
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Digite um valor válido");
-                passainf = JOptionPane.showInputDialog("Qual procedimento quer fazer?\n[1]Cadastro\n[2]Reserva\n[3]Consulta\n[4]Cancelar reserva\n[5]Reparo e danificado\n[6]Lista negra e dividas\n[99]SAIR");
+            passainf = JOptionPane.showInputDialog("Qual procedimento quer fazer?\n[1]Cadastro\n[2]Reserva\n[3]Consulta\n[4]Cancelar reserva\n[5]Reparo e danificado\n[6]Lista negra e dividas\n[99]SAIR");
+            if (passainf == null) {
+                return;
             }
-        } while (true);
+        } while (passainf.isEmpty());
+        do {
+            passainf = JOptionPane.showInputDialog("Qual procedimento quer fazer?\n[1]Cadastro\n[2]Reserva\n[3]Consulta\n[4]Cancelar reserva\n[5]Reparo e danificado\n[6]Lista negra e dividas\n[99]SAIR");
+            if (passainf == null) {
+                return;
+            }
+        } while (passainf.isEmpty());
+        escolha = Integer.parseInt(passainf);
         switch (escolha) {
             case 1:
                 do {
-                    passainf = JOptionPane.showInputDialog("[1]Cliente\n[2]Quarto\n[99]VOLTAR");
-                    if (passainf == null) {
-                        break;
-                    }
                     do {
-                        try {
-                            escolha2 = Integer.parseInt(passainf);
-                            break;
-                        } catch (NumberFormatException e) {
-                            JOptionPane.showMessageDialog(null, "Digite um valor válido");
-                            passainf = JOptionPane.showInputDialog("[1]Cliente\n[2]Quarto\n[99]VOLTAR");
+                        passainf = JOptionPane.showInputDialog("[1]Cliente\n[2]Quarto\n[99]VOLTAR");
+                        if (passainf == null) {
+                            return;
                         }
-                    } while (true);
+                    } while (passainf.isEmpty());
+                    escolha2 = Integer.parseInt(passainf);
                     switch (escolha2) {
                         case 1:
                             ca.cadastroCliente();
@@ -58,19 +52,13 @@ void main() {
                 break;
             case 3:
                 do {
-                    passainf = JOptionPane.showInputDialog("[1]Cliente\n[2]Quarto\n[99]VOLTAR");
-                    if (passainf == null) {
-                        break;
-                    }
                     do {
-                        try {
-                            escolha3 = Integer.parseInt(passainf);
-                            break;
-                        } catch (NumberFormatException e) {
-                            JOptionPane.showMessageDialog(null, "Digite um valor válido");
-                            passainf = JOptionPane.showInputDialog("[1]Cliente\n[2]Quarto\n[99]VOLTAR");
+                        passainf = JOptionPane.showInputDialog("[1]Cliente\n[2]Quarto\n[99]VOLTAR");
+                        if (passainf == null) {
+                            return;
                         }
-                    } while (true);
+                    } while (passainf.isEmpty());
+                    escolha3 = Integer.parseInt(passainf);
                     switch (escolha3) {
                         case 1:
                             con.ConsultaCliente();
@@ -87,19 +75,13 @@ void main() {
                 break;
             case 5:
                 do {
-                    passainf = JOptionPane.showInputDialog("[1]Reparo\n[2]Danificado\n[99]Voltar");
-                    if (passainf == null) {
-                        break;
-                    }
                     do {
-                        try {
-                            escolha4 = Integer.parseInt(passainf);
-                            break;
-                        } catch (NumberFormatException e) {
-                            JOptionPane.showMessageDialog(null, "Digite um valor válido");
-                            passainf = JOptionPane.showInputDialog("[1]Reparo\n[2]Danificado\n[99]Voltar");
+                        passainf = JOptionPane.showInputDialog("[1]Reparo\n[2]Danificado\n[99]Voltar");
+                        if (passainf == null) {
+                            return;
                         }
-                    } while (true);
+                    } while (passainf.isEmpty());
+                    escolha4 = Integer.parseInt(passainf);
                     switch (escolha4) {
                         case 1:
                             ma.reparo();
@@ -108,24 +90,17 @@ void main() {
                             ma.estrago();
                             break;
                     }
-
                 } while (escolha4 != 99);
                 break;
             case 6:
                 do {
-                    passainf = JOptionPane.showInputDialog("[1]Lista Negra\n[2]Divídas\n[99]Voltar");
-                    if (passainf == null) {
-                        break;
-                    }
                     do {
-                        try {
-                            escolha5 = Integer.parseInt(passainf);
-                            break;
-                        } catch (NumberFormatException e) {
-                            JOptionPane.showMessageDialog(null, "Digite um valor válido");
-                            passainf = JOptionPane.showInputDialog("[1]Lista Negra\n[2]Divídas\n[99]Voltar");
+                        passainf = JOptionPane.showInputDialog("[1]Lista Negra\n[2]Divídas\n[99]Voltar");
+                        if (passainf == null) {
+                            return;
                         }
-                    } while (true);
+                    } while (passainf.isEmpty());
+                    escolha5 = Integer.parseInt(passainf);
                     switch (escolha5) {
                         case 1:
                             ln.ListaNegra();
@@ -136,7 +111,6 @@ void main() {
                     }
 
                 } while (escolha5 != 99);
-                break;
         }
     } while (escolha != 99);
 

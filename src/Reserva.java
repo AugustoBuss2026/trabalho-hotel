@@ -19,13 +19,16 @@ public class Reserva {
     String nomeProcura, quartoProcura, passarinf, dia, mes, ano, dia2, mes2, ano2, hora1, hora2, minuto1, minuto2, cpfformatado;
     int i, f, y, a, numeros, qtreservador, contar;
     double valorTotalReserva, valorTotal;
+    Boolean cafe, massagem;
 
     void reservarQuarto() {
         valorTotal = 0;
-        nomeProcura = JOptionPane.showInputDialog("CPF do hospede a reservar o quarto");
-        if (nomeProcura == null) {
-            return;
-        }
+        do {
+            nomeProcura = JOptionPane.showInputDialog("CPF do hospede a reservar o quarto");
+            if (nomeProcura == null) {
+                return;
+            }
+        }while (nomeProcura.isEmpty());
         for (i = 0; i < ca.nome.size(); i++) {
             if (nomeProcura.equalsIgnoreCase(ca.cpf.get(i))) {
                 if (ca.devendo.get(i) == true) {
@@ -37,18 +40,23 @@ public class Reserva {
                     return;
                 }
                 do {
+                    cafe = false;
+                    massagem = false;
                     passarinf = JOptionPane.showInputDialog("Quer adicionar alguém serviço de nosso hotel?\n[1]Café no quarto\n[2]Massagem\n[3]Café no quarto/Massagem\n[0]Não");
-                } while (passarinf == null || Integer.parseInt(passarinf) != 1 && Integer.parseInt(passarinf) != 2 && Integer.parseInt(passarinf) != 0);
+                    if (passarinf == null){
+                        return;
+                    }
+                } while (passarinf.isEmpty() || Integer.parseInt(passarinf) != 1 && Integer.parseInt(passarinf) != 2 && Integer.parseInt(passarinf) != 0);
                 numeros = Integer.parseInt(passarinf);
                 if (numeros == 1) {
-                    ca.cafe.set(i, true);
+                    cafe = true;
                     JOptionPane.showMessageDialog(null, "Serviço de café no quarto adicionado");
                 } else if (numeros == 2) {
-                    ca.massagem.set(i, true);
+                    massagem = true;
                     JOptionPane.showMessageDialog(null, "Serviço de massagem adicionado");
                 } else if (numeros == 3) {
-                    ca.cafe.set(i, true);
-                    ca.massagem.set(i, true);
+                    cafe = true;
+                    massagem = true;
                     JOptionPane.showMessageDialog(null, "Serviço de café no quarto e de massagem adicionado");
                 } else if (numeros == 0) {
                     JOptionPane.showMessageDialog(null, "Nenhum serviço adicionado");
@@ -58,60 +66,92 @@ public class Reserva {
                 }
                 do {
                     quartoProcura = JOptionPane.showInputDialog("Nome do quarto que o cliente quer reservar");
-                } while (quartoProcura == null);
+                    if (quartoProcura == null){
+                        return;
+                    }
+                } while (quartoProcura.isEmpty());
                 for (f = 0; f < ca.nomeQuarto.size(); f++) {
                     if (quartoProcura.equalsIgnoreCase(ca.nomeQuarto.get(f))) {
                         dataAgora = LocalDate.now();
                         do {
                             passarinf = JOptionPane.showInputDialog("Quantos hospedes maiores de idade vão utilizar este quarto");
-                        } while (passarinf == null || Integer.parseInt(passarinf) < 18);
+                            if (passarinf == null){
+                                return;
+                            }
+                        } while (passarinf.isEmpty() || Integer.parseInt(passarinf) < 18);
                         qtreservador = Integer.parseInt(passarinf);
                         if (ca.qthospede.get(f) < qtreservador) {
                             JOptionPane.showMessageDialog(null, "Quantidade de hospedes superior à capacidade do quarto");
-                            ca.cafe.set(i, false);
-                            ca.massagem.set(i, false);
                             return;
                         }
                         if (ca.danificado.get(f) == true) {
                             JOptionPane.showMessageDialog(null, "Quarto está danificado, logo não disponível");
-                            ca.cafe.set(i, false);
-                            ca.massagem.set(i, false);
                             return;
                         }
                         do {
                             dia = JOptionPane.showInputDialog("Coloque o dia da reserva");
-                        } while (dia == null || dia.matches("\\d+") || dia.length() != 2);
+                            if (dia == null){
+                                return;
+                            }
+                        } while (dia.isEmpty() || dia.matches("\\d+") || dia.length() != 2);
                         do {
                             mes = JOptionPane.showInputDialog("Coloque o mês da reserva");
-                        } while (mes == null || mes.matches("\\d+") || mes.length() != 2);
+                            if (mes == null){
+                                return;
+                            }
+                        } while (mes.isEmpty() || mes.matches("\\d+") || mes.length() != 2);
                         do {
                             ano = JOptionPane.showInputDialog("Coloque o ano da reserva");
-                        } while (ano == null || ano.matches("\\d+") || ano.length() != 2);
+                            if (ano == null){
+                                return;
+                            }
+                        } while (ano.isEmpty() || ano.matches("\\d+") || ano.length() != 2);
                         DateTimeFormatter formatadorData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                         d1 = LocalDate.parse(dia + "/" + mes + "/" + ano, formatadorData);
                         do {
                             dia2 = JOptionPane.showInputDialog("Coloque o dia de fim da reserva");
-                        } while (dia2 == null || dia2.matches("\\d+") || dia2.length() != 2);
+                            if (dia2 == null){
+                                return;
+                            }
+                        } while (dia2.isEmpty() || dia2.matches("\\d+") || dia2.length() != 2);
                         do {
                             mes2 = JOptionPane.showInputDialog("Coloque o mês de fim da reserva");
-                        } while (mes2 == null || mes2.matches("\\d+") || mes2.length() != 2);
+                            if (mes2 == null){
+                                return;
+                            }
+                        } while (mes2.isEmpty() || mes2.matches("\\d+") || mes2.length() != 2);
                         do {
                             ano2 = JOptionPane.showInputDialog("Coloque o ano de fim da reserva");
-                        } while (ano2 == null || ano2.matches("\\d+") || ano2.length() != 2);
+                            if (ano2 == null){
+                                return;
+                            }
+                        } while (ano2.isEmpty() || ano2.matches("\\d+") || ano2.length() != 2);
                         d2 = LocalDate.parse(dia2 + "/" + mes2 + "/" + ano2, formatadorData);
                         do {
                             hora1 = JOptionPane.showInputDialog("Horário de chegada (hora)");
-                        } while (hora1 == null || hora1.matches("\\d+") || hora1.length() != 2);
+                            if (hora1 == null){
+                                return;
+                            }
+                        } while (hora1.isEmpty() || hora1.matches("\\d+") || hora1.length() != 2);
                         do {
                             minuto1 = JOptionPane.showInputDialog("Horário de chegada (minuto)");
-                        }while (minuto1 == null || minuto1.matches("\\d+") || minuto1.length() != 2);
+                            if (minuto1 == null){
+                                return;
+                            }
+                        }while (minuto1.isEmpty() || minuto1.matches("\\d+") || minuto1.length() != 2);
                         horario1 = LocalTime.of(Integer.parseInt(hora1), Integer.parseInt(minuto1));
                         do {
                             hora2 = JOptionPane.showInputDialog("Horário de partida (hora)");
-                        }while (hora2 == null || hora2.matches("\\d+") || hora2.length() != 2);
+                            if (hora2 == null){
+                                return;
+                            }
+                        }while (hora2.isEmpty() || hora2.matches("\\d+") || hora2.length() != 2);
                         do {
                             minuto2 = JOptionPane.showInputDialog("Horário de partida (minuto)");
-                        }while (minuto2 == null || minuto2.matches("\\d+") || minuto2.length() != 2);
+                            if (minuto2 == null){
+                                return;
+                            }
+                        }while (minuto2.isEmpty() || minuto2.matches("\\d+") || minuto2.length() != 2);
                         horario2 = LocalTime.of(Integer.parseInt(hora2), Integer.parseInt(minuto2));
 
                         limpa = horario2.plusHours(2);
@@ -119,15 +159,11 @@ public class Reserva {
                         for (a = 0; a < ca.fimLimpeza.get(f).size(); a++) {
                             if (horarioAgora.isBefore(ca.fimLimpeza.get(f).get(a)) && horarioAgora.equals(ca.fimLimpeza.get(f).get(a))) {
                                 JOptionPane.showMessageDialog(null, "Hórario indisponível, limpeza sendo feita");
-                                ca.cafe.set(i, false);
-                                ca.massagem.set(i, false);
                                 return;
                             }
                         }
                         if (!d2.isAfter(d1)) {
                             JOptionPane.showMessageDialog(null, "A data final deve ser depois da data inicial");
-                            ca.cafe.set(i, false);
-                            ca.massagem.set(i, false);
                             return;
                         }
 
@@ -135,11 +171,17 @@ public class Reserva {
                             if (ca.data1.get(f).get(y) != null && ca.data2.get(f).get(y) != null) {
                                 if (d1.isBefore(ca.data2.get(f).get(y)) && d2.isAfter(ca.data1.get(f).get(y))) {
                                     JOptionPane.showMessageDialog(null, "Quarto ocupado, neste periodo");
-                                    ca.cafe.set(i, false);
-                                    ca.massagem.set(i, false);
                                     return;
                                 }
                             }
+                        }
+                        if (cafe){
+                            ca.cafe.get(i).add(true);
+                            valorTotal += 50 * qtreservador;
+                        }
+                        if (massagem){
+                            ca.massagem.get(i).add(true);
+                            valorTotal += 250;
                         }
                         contar = ca.data1.get(f).size();
                         ca.fimLimpeza.get(f).add(limpa);
@@ -151,12 +193,6 @@ public class Reserva {
                         totalDias = ChronoUnit.DAYS.between(d1, d2);
                         valorTotalReserva = ca.valorD.get(f) * totalDias;
                         valorTotal += valorTotalReserva;
-                        if (ca.cafe.get(i) == true) {
-                            valorTotal += 50 * qtreservador;
-                        }
-                        if (ca.massagem.get(i) == true) {
-                            valorTotal += 250;
-                        }
                         ca.valorFinal.get(i).add(valorTotal);
                         ca.quartoAssociado.get(i).add(ca.nomeQuarto.get(f));
                         ca.clienteAssociado.get(f).add(ca.nome.get(i));
@@ -173,7 +209,8 @@ public class Reserva {
                         passarinf = JOptionPane.showInputDialog("Qual a forma de Pagamento\n[1]PIX\n[2]Débito\n[3]Crédito\n[4]Dinheiro\n[0]Desistir do pagamento");
                         do {
                             passarinf = JOptionPane.showInputDialog("Qual a forma de Pagamento\n[1]PIX\n[2]Débito\n[3]Crédito\n[4]Dinheiro\n[0]Desistir do pagamento");
-                        }while (passarinf == null || Integer.parseInt(passarinf) != 1 && Integer.parseInt(passarinf) != 2 && Integer.parseInt(passarinf) != 3 && Integer.parseInt(passarinf) != 4 && Integer.parseInt(passarinf) != 0);
+                        }while (passarinf == null || passarinf.isEmpty() || Integer.parseInt(passarinf) != 1 && Integer.parseInt(passarinf) != 2 && Integer.parseInt(passarinf) != 3 && Integer.parseInt(passarinf) != 4 && Integer.parseInt(passarinf) != 0);
+                        numeros = Integer.parseInt(passarinf);
                         if (numeros == 1) {
                             ca.formaDePagamento.set(i, "PIX");
                             JOptionPane.showMessageDialog(null, "Hospedagem paga com PIX");
@@ -192,8 +229,8 @@ public class Reserva {
                             return;
                         } else if (numeros == 0) {
                             JOptionPane.showMessageDialog(null, "Hospedagem cancelada");
-                            ca.cafe.set(i, false);
-                            ca.massagem.set(i, false);
+                            ca.cafe.get(i).remove(contar);
+                            ca.massagem.get(i).remove(contar);
                             ca.data1.get(f).remove(contar);
                             ca.data2.get(f).remove(contar);
                             ca.horario1.get(f).remove(contar);

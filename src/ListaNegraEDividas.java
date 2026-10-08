@@ -13,12 +13,18 @@ public class ListaNegraEDividas {
     void ListaNegra() {
         do {
             procuraronme = JOptionPane.showInputDialog("Qual é o CPF do cliente a entrar na lista negra");
-        } while (procuraronme == null);
+            if (procuraronme == null){
+                return;
+            }
+        } while (procuraronme.isEmpty());
         for (m = 0; m < ca.nome.size(); m++) {
             if (procuraronme.equals(ca.cpf.get(m)) && ca.listaNegra.get(m) == false) {
                 do {
                     motivo = JOptionPane.showInputDialog("Qual é o motivo");
-                } while (motivo == null);
+                    if (motivo == null){
+                        return;
+                    }
+                } while (motivo.isEmpty());
                 ca.motivo.set(m, motivo);
                 JOptionPane.showMessageDialog(null, ca.nome.get(m) + " foi adicionado a lista negra por " + ca.motivo.get(m));
                 ca.listaNegra.set(m, true);
@@ -31,12 +37,18 @@ public class ListaNegraEDividas {
     void Divida() {
         do {
             procuraronme = JOptionPane.showInputDialog("Qual é o CPF do cliente dividado");
-        } while (procuraronme == null);
+            if (procuraronme == null){
+                return;
+            }
+        } while (procuraronme.isEmpty());
         for (m = 0; m < ca.nome.size(); m++) {
             if (procuraronme.equals(ca.cpf.get(m)) && ca.devendo.get(m) == true) {
                 JOptionPane.showMessageDialog(null, ca.nome.get(m) + " dividado em " + ca.divida.get(m));
                 do {
                     pps = JOptionPane.showInputDialog("[1]Prosseguir\n[2]Desistir do pagamento");
+                    if (pps == null){
+                        return;
+                    }
                     decidir = Integer.parseInt(pps);
                     switch (decidir) {
                         case 1:
@@ -45,11 +57,11 @@ public class ListaNegraEDividas {
                             ca.devendo.set(m, false);
                             return;
                         case 2:
-                            return;
+                            break;
                         default:
                             JOptionPane.showMessageDialog(null, "Digite entre 1 e 2");
                     }
-                } while (pps == null || Integer.parseInt(pps) != 1 && Integer.parseInt(pps) != 2);
+                } while (pps.isEmpty() || Integer.parseInt(pps) != 1 && Integer.parseInt(pps) != 2);
                 JOptionPane.showMessageDialog(null, "Cliente não encontrado");
             }
         }

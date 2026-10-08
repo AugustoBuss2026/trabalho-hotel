@@ -14,7 +14,12 @@ public class CancelarReservas {
         texto= "";
         contar = -1;
         contar2 = -1;
-        procurarCancelamentoNome= JOptionPane.showInputDialog("Qual o CPF do hospede quer cancelar");
+        do {
+            procurarCancelamentoNome = JOptionPane.showInputDialog("Qual o CPF do hospede quer cancelar");
+            if (procurarCancelamentoNome == null){
+                return;
+            }
+        }while (procurarCancelamentoNome.isEmpty());
         for(p= 0; p< ca.nome.size(); p++) {
             if(procurarCancelamentoNome.equals(ca.cpf.get(p))) {
                 for(z= 0; z< ca.quartoAssociado.get(p).size(); z++) {
@@ -25,7 +30,12 @@ public class CancelarReservas {
                     return;
                 }
                 JOptionPane.showMessageDialog(null, "Quartos associados:\n"+ texto);
-                procurarCancelamentoQuarto= JOptionPane.showInputDialog("Qual quarto a ser cancelado");
+                do {
+                    procurarCancelamentoQuarto = JOptionPane.showInputDialog("Qual quarto a ser cancelado");
+                    if (procurarCancelamentoQuarto == null){
+                        return;
+                    }
+                }while(procurarCancelamentoQuarto.isEmpty());
                 for(t= 0; t< ca.quartoAssociado.get(p).size(); t++) {
                     if(ca.quartoAssociado.get(p).get(t).equalsIgnoreCase(procurarCancelamentoQuarto)) {
                         contar= t;
@@ -44,8 +54,8 @@ public class CancelarReservas {
                             return;
                         }
                         ca.quartoAssociado.get(p).remove(contar);
-                        ca.cafe.set(p, false);
-                        ca.massagem.set(p, false);
+                        ca.cafe.get(p).remove(contar);
+                        ca.massagem.get(p).remove(contar);
                         ca.data1.get(k).remove(contar2);
                         ca.data2.get(k).remove(contar2);
                         ca.horario1.get(k).remove(contar2);
@@ -61,6 +71,6 @@ public class CancelarReservas {
                 }
             }
         }
-        JOptionPane.showMessageDialog(null, "Cliente ou quarto não encontrados");
+        JOptionPane.showMessageDialog(null, "Cliente não encontrados");
     }
 }
